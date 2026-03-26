@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Chaerim Kim — PhD Candidate in Electrical & Computer Systems Engineering at Monash University. Research in multimodal assistive technology, wearable interfaces, simulated prosthetic vision, and human-computer interaction.">
+    <meta name="author" content="Chaerim Kim">
+    <title>Chaerim Kim — Researcher & Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* ========== CSS CUSTOM PROPERTIES ========== */
+        :root {
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-serif: 'Source Serif 4', Georgia, serif;
+            --max-width: 1100px;
+            --nav-height: 64px;
+            --radius: 12px;
+            --radius-sm: 8px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="light"] {
+            --bg: #FAFAF9;
+            --bg-alt: #FFFFFF;
+            --bg-card: #FFFFFF;
+            --text: #1C1917;
+            --text-secondary: #57534E;
+            --text-tertiary: #A8A29E;
+            --accent: #6366F1;
+            --accent-hover: #4F46E5;
+            --accent-light: #EEF2FF;
+            --border: #E7E5E4;
+            --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.06), 0 4px 10px rgba(0,0,0,0.04);
+            --tag-bg: #F5F3FF;
+            --tag-text: #5B21B6;
+            --tag-bg-2: #ECFDF5;
+            --tag-text-2: #065F46;
+            --tag-bg-3: #FFF7ED;
+            --tag-text-3: #9A3412;
+            --tag-bg-4: #EFF6FF;
+            --tag-text-4: #1E40AF;
+            --hero-gradient: linear-gradient(135deg, #F5F3FF 0%, #EEF2FF 50%, #ECFDF5 100%);
+            --code-bg: #F5F5F4;
+        }
+
+        [data-theme="dark"] {
+            --bg: #0C0A09;
+            --bg-alt: #1C1917;
+            --bg-card: #1C1917;
+            --text: #FAFAF9;
+            --text-secondary: #A8A29E;
+            --text-tertiary: #78716C;
+            --accent: #818CF8;
+            --accent-hover: #A5B4FC;
+            --accent-light: #1E1B4B;
+            --border: #292524;
+            --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.4), 0 4px 10px rgba(0,0,0,0.3);
+            --tag-bg: #1E1B4B;
+            --tag-text: #C4B5FD;
+            --tag-bg-2: #022C22;
+            --tag-text-2: #6EE7B7;
+            --tag-bg-3: #431407;
+            --tag-text-3: #FDBA74;
+            --tag-bg-4: #172554;
+            --tag-text-4: #93C5FD;
+            --hero-gradient: linear-gradient(135deg, #1E1B4B 0%, #0C0A09 50%, #022C22 100%);
+            --code-bg: #292524;
+        }
+
+        /* ========== RESET & BASE ========== */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: var(--nav-height);
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            transition: background var(--transition), color var(--transition);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { color: var(--accent); text-decoration: none; transition: color var(--transition); }
+        a:hover, a:focus { color: var(--accent-hover); }
+        a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+
+        img { max-width: 100%; display: block; }
+
+        ::selection { background: var(--accent); color: white; }
+
+        /* ========== SKIP LINK (A11y) ========== */
+        .skip-link {
+            position: absolute;
+            top: -100%;
+            left: 16px;
+            background: var(--accent);
+            color: white;
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            z-index: 1000;
+            font-weight: 500;
+        }
+        .skip-link:focus { top: 8px; }
+
+        /* ========== NAVIGATION ========== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--nav-height);
+            background: var(--bg-alt);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            transition: background var(--transition), border-color var(--transition);
+            backdrop-filter: blur(12px);
+        }
+
+        [data-theme="light"] nav { background: rgba(255,255,255,0.85); }
+        [data-theme="dark"] nav { background: rgba(28,25,23,0.85); }
+
+        .nav-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: var(--text);
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            transition: color var(--transition), background var(--transition);
+        }
+
+        .nav-links a:hover, .nav-links a:focus {
+            color: var(--text);
+            background: var(--accent-light);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--text);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.125rem;
+            transition: border-color var(--transition), background var(--transition);
+            margin-left: 8px;
+        }
+
+        .theme-toggle:hover { background: var(--accent-light); border-color: var(--accent); }
+        .theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--hero-gradient);
+            padding: calc(var(--nav-height) + 48px) 24px 80px;
+            transition: background var(--transition);
+        }
+
+        .hero-content {
+            max-width: 720px;
+            text-align: center;
+        }
+
+        .hero-avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: var(--accent-light);
+            border: 3px solid var(--accent);
+            margin: 0 auto 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--accent);
+            font-weight: 700;
+            object-fit: cover;
+        }
+
+        .hero-title {
+            font-size: clamp(2rem, 5vw, 3.25rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            margin-bottom: 12px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .hero-tagline {
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-size: 1.25rem;
+            color: var(--accent);
+            margin-bottom: 32px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            font-size: 0.9375rem;
+            font-weight: 600;
+            transition: all var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+        .btn-primary:hover { background: var(--accent-hover); color: white; transform: translateY(-1px); box-shadow: var(--shadow-lg); }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text);
+            border: 1.5px solid var(--border);
+        }
+        .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+
+        /* ========== SECTIONS ========== */
+        section {
+            padding: 96px 24px;
+        }
+
+        .section-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .section-title {
+            font-size: clamp(1.5rem, 3vw, 2.25rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+
+        .section-desc {
+            font-size: 1.0625rem;
+            color: var(--text-secondary);
+            max-width: 640px;
+            margin-bottom: 48px;
+            line-height: 1.75;
+        }
+
+        section:nth-child(even) {
+            background: var(--bg-alt);
+        }
+
+        /* ========== ABOUT ========== */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: start;
+        }
+
+        .about-text p {
+            margin-bottom: 16px;
+            color: var(--text-secondary);
+            font-size: 1.0625rem;
+        }
+
+        .about-text p:first-child {
+            color: var(--text);
+            font-size: 1.125rem;
+        }
+
+        .about-highlights {
+            display: grid;
+            gap: 16px;
+        }
+
+        .highlight-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            transition: border-color var(--transition), box-shadow var(--transition);
+        }
+
+        .highlight-card:hover {
+            border-color: var(--accent);
+            box-shadow: var(--shadow);
+        }
+
+        .highlight-icon { font-size: 1.5rem; margin-bottom: 8px; }
+        .highlight-title { font-weight: 600; font-size: 0.9375rem; margin-bottom: 4px; }
+        .highlight-desc { font-size: 0.8125rem; color: var(--text-secondary); }
+
+        /* ========== RESEARCH ========== */
+        .research-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 32px;
+            margin-bottom: 24px;
+            transition: border-color var(--transition), box-shadow var(--transition);
+        }
+
+        .research-card:hover {
+            border-color: var(--accent);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .research-card.flagship {
+            border-left: 4px solid var(--accent);
+        }
+
+        .research-badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 4px 10px;
+            border-radius: 99px;
+            margin-bottom: 12px;
+        }
+
+        .badge-flagship { background: var(--tag-bg); color: var(--tag-text); }
+        .badge-conference { background: var(--tag-bg-2); color: var(--tag-text-2); }
+        .badge-submitted { background: var(--tag-bg-3); color: var(--tag-text-3); }
+
+        .research-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.01em;
+        }
+
+        .research-venue {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            font-style: italic;
+        }
+
+        .research-desc {
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+            margin-bottom: 16px;
+        }
+
+        .research-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 4px 10px;
+            border-radius: 99px;
+            background: var(--tag-bg);
+            color: var(--tag-text);
+        }
+
+        .research-themes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-top: 48px;
+        }
+
+        .theme-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            transition: border-color var(--transition);
+        }
+        .theme-card:hover { border-color: var(--accent); }
+        .theme-card-icon { font-size: 1.75rem; margin-bottom: 12px; }
+        .theme-card-title { font-weight: 600; margin-bottom: 6px; }
+        .theme-card-desc { font-size: 0.875rem; color: var(--text-secondary); }
+
+        /* ========== SKILLS ========== */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .skill-category {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px;
+        }
+
+        .skill-category-icon { font-size: 1.5rem; margin-bottom: 12px; }
+        .skill-category-title { font-weight: 700; font-size: 1.0625rem; margin-bottom: 16px; }
+
+        .skill-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .chip {
+            font-size: 0.8125rem;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 99px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: var(--text-secondary);
+            transition: all var(--transition);
+        }
+
+        .chip:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-light);
+        }
+
+        /* ========== TEACHING ========== */
+        .teaching-list {
+            display: grid;
+            gap: 16px;
+        }
+
+        .teaching-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 16px;
+            align-items: center;
+            transition: border-color var(--transition);
+        }
+        .teaching-item:hover { border-color: var(--accent); }
+
+        .teaching-icon { font-size: 1.75rem; }
+        .teaching-name { font-weight: 600; font-size: 1rem; }
+        .teaching-detail { font-size: 0.875rem; color: var(--text-secondary); }
+        .teaching-period {
+            font-size: 0.8125rem;
+            color: var(--text-tertiary);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        /* ========== PROJECTS ========== */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px;
+            transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+        }
+
+        .project-card:hover {
+            border-color: var(--accent);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .project-card-icon { font-size: 2rem; margin-bottom: 16px; }
+        .project-card-title { font-weight: 700; font-size: 1.125rem; margin-bottom: 8px; }
+        .project-card-desc { font-size: 0.9375rem; color: var(--text-secondary); margin-bottom: 16px; }
+
+        /* ========== TIMELINE / NEWS ========== */
+        .timeline {
+            position: relative;
+            padding-left: 32px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 32px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -32px;
+            top: 8px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 3px solid var(--bg);
+        }
+
+        .timeline-date {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 4px;
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .timeline-desc {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+        }
+
+        /* ========== CONTACT ========== */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .contact-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            text-align: center;
+            transition: border-color var(--transition), box-shadow var(--transition);
+        }
+
+        .contact-card:hover {
+            border-color: var(--accent);
+            box-shadow: var(--shadow);
+        }
+
+        .contact-card-icon { font-size: 1.5rem; margin-bottom: 8px; }
+        .contact-card-label { font-size: 0.8125rem; color: var(--text-tertiary); margin-bottom: 4px; font-weight: 500; }
+        .contact-card-value { font-weight: 600; font-size: 0.9375rem; }
+        .contact-card-value a { color: var(--text); }
+        .contact-card-value a:hover { color: var(--accent); }
+
+        /* ========== FOOTER ========== */
+        footer {
+            padding: 48px 24px;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            font-size: 0.875rem;
+            color: var(--text-tertiary);
+        }
+
+        footer .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 16px;
+        }
+
+        footer .footer-links a {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* ========== ANIMATIONS ========== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .nav-links.open {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: var(--nav-height);
+                left: 0;
+                right: 0;
+                background: var(--bg-alt);
+                border-bottom: 1px solid var(--border);
+                padding: 16px 24px;
+                gap: 4px;
+            }
+            .mobile-menu-btn { display: block; }
+
+            .about-grid { grid-template-columns: 1fr; gap: 32px; }
+            .hero { padding-top: calc(var(--nav-height) + 32px); padding-bottom: 48px; }
+            section { padding: 64px 20px; }
+            .teaching-item { grid-template-columns: auto 1fr; }
+            .teaching-period { grid-column: 1 / -1; }
+            .projects-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ========== PRINT ========== */
+        @media print {
+            nav, .theme-toggle, .mobile-menu-btn, .hero-buttons { display: none; }
+            section { padding: 24px 0; }
+            .hero { min-height: auto; background: none; }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+
+    <!-- ========== NAVIGATION ========== -->
+    <nav role="navigation" aria-label="Main navigation">
+        <div class="nav-inner">
+            <a href="#" class="nav-logo" aria-label="Home">C.Kim</a>
+            <ul class="nav-links" id="navLinks" role="list">
+                <li><a href="#about">About</a></li>
+                <li><a href="#research">Research</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#teaching">Teaching</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#news">News</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div style="display:flex;align-items:center;gap:4px;">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+                    <span id="themeIcon">&#9790;</span>
+                </button>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu" aria-expanded="false">
+                    &#9776;
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main">
+        <!-- ========== HERO ========== -->
+        <section class="hero" id="hero" aria-label="Introduction">
+            <div class="hero-content">
+                <!-- TO ADD YOUR PHOTO: replace the src below with your image file, e.g. "photo.jpg" -->
+                <!-- Then place your photo file (e.g. photo.jpg) in the same folder as index.html -->
+                <img class="hero-avatar" src="photo.jpg" alt="Chaerim Kim — portrait photo" onerror="this.style.display='none'; document.getElementById('avatar-fallback').style.display='flex';">
+                <div class="hero-avatar" id="avatar-fallback" aria-hidden="true" style="display:none;">CK</div>
+                <h1 class="hero-title">Chaerim Kim</h1>
+                <p class="hero-subtitle">PhD Candidate — Electrical &amp; Computer Systems Engineering</p>
+                <p class="hero-tagline">"Engineering multimodal systems where touch meets vision — from wearable guidance to prosthetic sight."</p>
+                <div class="hero-buttons">
+                    <a href="#research" class="btn btn-primary">View Research</a>
+                    <a href="Chaerim_Kim_CV.pdf" class="btn btn-outline" download>Download CV (PDF)</a>
+                    <a href="#contact" class="btn btn-outline">Contact Me</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== ABOUT ========== -->
+        <section id="about" aria-labelledby="about-title">
+            <div class="section-inner fade-in">
+                <p class="section-label">About Me</p>
+                <h2 class="section-title" id="about-title">Where Engineering Meets Human Experience</h2>
+                <div class="about-grid">
+                    <div class="about-text">
+                        <p>I'm a PhD candidate at Monash University's Department of Electrical and Computer Systems Engineering, affiliated with the Biomedicine Discovery Institute. My research sits at the intersection of embedded systems, human-computer interaction, and assistive technology — spanning wearable multimodal interfaces for non-visual guidance and simulated prosthetic vision with haptic feedback.</p>
+
+                        <p>I've always been fascinated by human vision — how it shapes our cognition, emotions, and everyday actions. My interest in cameras and optics naturally drew me to understanding sight itself. A chance encounter with a visually impaired student at university, and watching their YouTube videos, revealed how profoundly the loss of vision disrupts actions we take for granted. That moment ignited my passion for assistive technology — from wearable haptic guidance systems to the frontier of prosthetic vision and brain-computer interfaces. At the core, I want to understand how touch and other senses can expand to fill the role of sight.</p>
+
+                        <p>What sets my work apart is the rare combination of low-level hardware skills (FPGA design, circuit fabrication, sensor integration) with rigorous human-centered research methods. I don't just build the device — I design the experiments, run the user studies, and analyze how humans interact with the technology I create.</p>
+
+                        <p>Outside the lab, I'm someone who loves making things with my hands — whether that's cooking, drawing, or building circuits. I'm drawn to sports (anything with a ball, plus running), and I find peace in watching how nature unfolds through the lens of my Fujifilm camera. I'm a fan of sci-fi and animation that pushes beyond what we can imagine, and I'm always looking to challenge myself and explore new areas.</p>
+
+                        <p><strong>Languages:</strong> Korean (native), English (fluent)</p>
+                        <p><strong>Member:</strong> IEEE</p>
+                    </div>
+                    <div class="about-highlights">
+                        <div class="highlight-card">
+                            <div class="highlight-icon" aria-hidden="true">&#128300;</div>
+                            <div class="highlight-title">Full-Stack Researcher</div>
+                            <div class="highlight-desc">From soldering sensors and writing Verilog to designing experiments and analyzing human performance data — end-to-end capability.</div>
+                        </div>
+                        <div class="highlight-card">
+                            <div class="highlight-icon" aria-hidden="true">&#9889;</div>
+                            <div class="highlight-title">Hardware + HCI</div>
+                            <div class="highlight-desc">Rare skill intersection — few candidates can do FPGA/embedded hardware design AND run rigorous user studies.</div>
+                        </div>
+                        <div class="highlight-card">
+                            <div class="highlight-icon" aria-hidden="true">&#10084;&#65039;</div>
+                            <div class="highlight-title">Real-World Impact</div>
+                            <div class="highlight-desc">Assistive technology that directly improves quality of life for people with visual impairments.</div>
+                        </div>
+                        <div class="highlight-card">
+                            <div class="highlight-icon" aria-hidden="true">&#128247;</div>
+                            <div class="highlight-title">Maker &amp; Creative</div>
+                            <div class="highlight-desc">Fujifilm photographer, cook, artist, and builder — a hands-on sensibility that carries into every prototype and experiment.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interview Video -->
+                <div style="margin-top:48px;">
+                    <h3 style="font-weight:600; font-size:1.125rem; margin-bottom:16px;">Featured Interview</h3>
+                    <a href="https://www.youtube.com/watch?v=dANIX3d6fD4" target="_blank" rel="noopener noreferrer" style="display:block; position:relative; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); aspect-ratio:16/9; background:#000;">
+                        <img src="https://img.youtube.com/vi/dANIX3d6fD4/hqdefault.jpg" alt="Interview with Chaerim Kim — watch on YouTube" style="width:100%; height:100%; object-fit:cover; opacity:0.8; transition:opacity 0.3s;">
+                        <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center;">
+                            <div style="width:68px; height:48px; background:rgba(255,0,0,0.85); border-radius:12px; display:flex; align-items:center; justify-content:center;">
+                                <div style="width:0; height:0; border-left:18px solid white; border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:4px;"></div>
+                            </div>
+                        </div>
+                    </a>
+                    <p style="font-size:0.875rem; color:var(--text-secondary); margin-top:12px;">My path to a PhD in Australia — the life journey, the turns, and a motto: "Rather than give up, I'll enjoy the trial and errors."</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== RESEARCH ========== -->
+        <section id="research" aria-labelledby="research-title">
+            <div class="section-inner fade-in">
+                <p class="section-label">Research</p>
+                <h2 class="section-title" id="research-title">Publications &amp; Projects</h2>
+                <p class="section-desc">My research explores how spatial design of multimodal feedback shapes non-visual interaction — with direct applications in wearable assistive technology.</p>
+
+                <!-- Flagship paper -->
+                <div class="research-card flagship">
+                    <span class="research-badge badge-submitted">Submitted to Journal</span>
+                    <h3 class="research-title">Spatial Alignment of Audio–Haptic Directional Feedback Shapes Non-Visual Hand Guidance</h3>
+                    <p class="research-venue">International Journal of Human-Computer Studies (IJHCS) — Under Review</p>
+                    <p class="research-desc">Cue alignment matters more than modality count. In a controlled experiment with 20 participants across 4 feedback conditions, we demonstrated that aligned dual-cue feedback (audio + haptic, spatially congruent) achieved the best path efficiency in non-visual reaching tasks. Simply adding more feedback modalities doesn't help — <em>how</em> they are spatially mapped is what matters. Direct implications for wearable assistive device design.</p>
+                    <div class="research-tags">
+                        <span class="tag">Multimodal Feedback</span>
+                        <span class="tag">Spatial Alignment</span>
+                        <span class="tag">Non-Visual Guidance</span>
+                        <span class="tag">User Study (N=20)</span>
+                        <span class="tag">Path Efficiency</span>
+                    </div>
+                </div>
+
+                <!-- Conference presentations for project 2 -->
+                <div class="research-card">
+                    <span class="research-badge badge-conference">Conference Poster</span>
+                    <h3 class="research-title">Spatial Alignment of Multimodal Feedback for Non-Visual Hand Guidance</h3>
+                    <p class="research-venue">Society for Neuroscience (SfN) 2025 &amp; IEEE EMBS 2025 — Poster Presentations</p>
+                    <p class="research-desc">Presented findings on how spatial congruency between audio and haptic cues affects hand guidance performance in non-visual reaching tasks. Demonstrated the critical role of feedback alignment in multimodal assistive interface design.</p>
+                    <div class="research-tags">
+                        <span class="tag">SfN 2025</span>
+                        <span class="tag">IEEE EMBS 2025</span>
+                        <span class="tag">Audio-Haptic</span>
+                    </div>
+                </div>
+
+                <!-- Project 1 -->
+                <div class="research-card">
+                    <span class="research-badge badge-conference">Conference Presentations</span>
+                    <h3 class="research-title">Evaluating Wrist-Worn Vibrotactile Feedback for Directional Guidance in Users with Visual Impairment</h3>
+                    <p class="research-venue">APEC 2024 (Poster) &bull; EPSM 2024 (Oral Presentation)</p>
+                    <p class="research-desc">Evaluated the effectiveness of wrist-worn vibrotactile feedback systems for providing directional guidance. Presented initial findings on how vibration patterns can encode spatial direction information for users with visual impairments.</p>
+                    <div class="research-tags">
+                        <span class="tag">Vibrotactile</span>
+                        <span class="tag">Wearable Device</span>
+                        <span class="tag">Visual Impairment</span>
+                        <span class="tag">Directional Guidance</span>
+                    </div>
+                </div>
+
+                <!-- Project 3 (current) -->
+                <div class="research-card">
+                    <span class="research-badge badge-flagship">In Progress</span>
+                    <h3 class="research-title">VR-Based Multimodal Interaction Study</h3>
+                    <p class="research-venue">Current project — Monash University</p>
+                    <p class="research-desc">Ongoing research leveraging virtual reality to investigate multimodal feedback design for assistive applications. Exploring the intersection of VR, brain-computer interfaces, and prosthetic vision.</p>
+                    <div class="research-tags">
+                        <span class="tag">Virtual Reality</span>
+                        <span class="tag">BCI</span>
+                        <span class="tag">Prosthetic Vision</span>
+                        <span class="tag">In Progress</span>
+                    </div>
+                </div>
+
+                <!-- Research Themes -->
+                <div class="research-themes">
+                    <div class="theme-card">
+                        <div class="theme-card-icon" aria-hidden="true">&#128268;</div>
+                        <div class="theme-card-title">Wearable Multimodal Interfaces</div>
+                        <div class="theme-card-desc">Designing audio-haptic feedback systems for non-visual guidance in wearable form factors.</div>
+                    </div>
+                    <div class="theme-card">
+                        <div class="theme-card-icon" aria-hidden="true">&#127911;</div>
+                        <div class="theme-card-title">Spatial Feedback Mapping</div>
+                        <div class="theme-card-desc">Investigating how spatial alignment of multimodal cues affects human performance.</div>
+                    </div>
+                    <div class="theme-card">
+                        <div class="theme-card-icon" aria-hidden="true">&#129466;</div>
+                        <div class="theme-card-desc">Building technology that directly improves mobility and interaction for people with visual impairments.</div>
+                        <div class="theme-card-title">Assistive Technology</div>
+                    </div>
+                    <div class="theme-card">
+                        <div class="theme-card-icon" aria-hidden="true">&#129504;</div>
+                        <div class="theme-card-title">Brain-Computer Interfaces</div>
+                        <div class="theme-card-desc">Exploring prosthetic vision and BCI as future directions for assistive sensory systems.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SKILLS ========== -->
+        <section id="skills" aria-labelledby="skills-title">
+            <div class="section-inner fade-in">
+                <p class="section-label">Technical Skills</p>
+                <h2 class="section-title" id="skills-title">Tools &amp; Technologies</h2>
+                <p class="section-desc">A rare blend of hardware engineering, software development, and human-centered research methods.</p>
+
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <div class="skill-category-icon" aria-hidden="true">&#128313;</div>
+                        <div class="skill-category-title">Hardware &amp; Embedded Systems</div>
+                        <div class="skill-chips">
+                            <span class="chip">FPGA Design</span>
+                            <span class="chip">Intel DE10-Lite</span>
+                            <span class="chip">Quartus Prime</span>
+                            <span class="chip">Platform Designer</span>
+                            <span class="chip">Nios II Processor</span>
+                            <span class="chip">Verilog HDL</span>
+                            <span class="chip">SPI / I2C</span>
+                            <span class="chip">Arduino</span>
+                            <span class="chip">Sensor Integration</span>
+                            <span class="chip">PCB Debugging</span>
+                            <span class="chip">Soldering</span>
+                            <span class="chip">3D Printing</span>
+                            <span class="chip">Circuit Design</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <div class="skill-category-icon" aria-hidden="true">&#128187;</div>
+                        <div class="skill-category-title">Software &amp; Programming</div>
+                        <div class="skill-chips">
+                            <span class="chip">C (Embedded)</span>
+                            <span class="chip">Python</span>
+                            <span class="chip">MATLAB</span>
+                            <span class="chip">LaTeX</span>
+                            <span class="chip">Git / GitHub</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <div class="skill-category-icon" aria-hidden="true">&#128202;</div>
+                        <div class="skill-category-title">Research &amp; HCI Methods</div>
+                        <div class="skill-chips">
+                            <span class="chip">Experiment Design</span>
+                            <span class="chip">Within-Subjects Studies</span>
+                            <span class="chip">Statistical Analysis</span>
+                            <span class="chip">Path Metrics</span>
+                            <span class="chip">Ethics Protocols</span>
+                            <span class="chip">Participant Recruitment</span>
+                            <span class="chip">Wearable Prototyping</span>
+                            <span class="chip">User Study Facilitation</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <div class="skill-category-icon" aria-hidden="true">&#128295;</div>
+                        <div class="skill-category-title">Tools &amp; Platforms</div>
+                        <div class="skill-chips">
+                            <span class="chip">Quartus Prime</span>
+                            <span class="chip">Platform Designer</span>
+                            <span class="chip">Git / GitHub</span>
+                            <span class="chip">3D Printing</span>
+                            <span class="chip">Oscilloscope</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== TEACHING ========== -->
+        <section id="teaching" aria-labelledby="teaching-title">
+            <div class="section-inner fade-in">
+                <p class="section-label">Teaching &amp; Mentorship</p>
+                <h2 class="section-title" id="teaching-title">Lab Demonstrator &amp; Teaching Associate</h2>
+                <p class="section-desc">Monash University — Leading lab classes for undergraduate engineering students, delivering lab introductions covering safety (OH&amp;S), equipment protocols, and assessment guidelines.</p>
+
+                <div class="teaching-list">
+                    <div class="teaching-item">
+                        <div class="teaching-icon" aria-hidden="true">&#128190;</div>
+                        <div>
+                            <div class="teaching-name">Computer Systems — Deputy of TA</div>
+                            <div class="teaching-detail">Deputy teaching associate role with expanded responsibilities</div>
+                        </div>
+                        <div class="teaching-period">S1 2026</div>
+                    </div>
+                    <div class="teaching-item">
+                        <div class="teaching-icon" aria-hidden="true">&#128247;</div>
+                        <div>
+                            <div class="teaching-name">ECE4076 — Computer Vision</div>
+                            <div class="teaching-detail">Computer vision fundamentals and applications</div>
+                        </div>
+                        <div class="teaching-period">S1 2025, S1 2026</div>
+                    </div>
+                    <div class="teaching-item">
+                        <div class="teaching-icon" aria-hidden="true">&#129302;</div>
+                        <div>
+                            <div class="teaching-name">ECE4191 — Engineering Integrated Design</div>
+                            <div class="teaching-detail">Integrated design projects bridging hardware and software</div>
+                        </div>
+                        <div class="teaching-period">S2 2025</div>
+                    </div>
+                    <div class="teaching-item">
+                        <div class="teaching-icon" aria-hidden="true">&#129657;</div>
+                        <div>
+                            <div class="teaching-name">ECE4081 — Medical Instrumentation</div>
+                            <div class="teaching-detail">Biomedical sensors, signal processing, and medical devices</div>
+                        </div>
+                        <div class="teaching-period">S2 2024, S2 2025</div>
+                    </div>
+                    <div class="teaching-item">
+                        <div class="teaching-icon" aria-hidden="true">&#127973;</div>
+                        <div>
+                            <div class="teaching-name">ECE4087 — Medical Technology Innovation</div>
+                            <div class="teaching-detail">Innovation and entrepreneurship in medical technology</div>
+                        </div>
+                        <div class="teaching-period">S2 2024</div>
+                    </div>
+                    <div class="teaching-item">
+                        <div class="teaching-icon" aria-hidden="true">&#129302;</div>
+                        <div>
+                            <div class="teaching-name">TRC3500 — Sensors &amp; Artificial Perception</div>
+                            <div class="teaching-detail">Sensor technologies and perception systems</div>
+                        </div>
+                        <div class="teaching-period">S1 2024, S1 2025</div>
+                    </div>
+                    <div class="teaching-item">
+                        <div class="teaching-icon" aria-hidden="true">&#9889;</div>
+                        <div>
+                            <div class="teaching-name">ECE3073 — Embedded Systems</div>
+                            <div class="teaching-detail">FPGA-based embedded systems projects — Quartus, Verilog, Nios II</div>
+                        </div>
+                        <div class="teaching-period">Multiple semesters</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== PROJECTS ========== -->
+        <section id="projects" aria-labelledby="projects-title">
+            <div class="section-inner fade-in">
+                <p class="section-label">Projects &amp; Portfolio</p>
+                <h2 class="section-title" id="projects-title">Tangible Builds</h2>
+                <p class="section-desc">Hands-on engineering projects that demonstrate end-to-end capability — from design through fabrication to testing.</p>
+
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-card-icon" aria-hidden="true">&#9000;</div>
+                        <h3 class="project-card-title">Tactile Wristband for Non-Visual Guidance</h3>
+                        <p class="project-card-desc">Custom-built wearable vibrotactile wristband for PhD research. Designed the circuit, fabricated the PCB, 3D-printed the enclosure, and programmed with Arduino. Used in controlled experiments studying directional guidance for users with visual impairments.</p>
+                        <div class="research-tags">
+                            <span class="tag">Circuit Design</span>
+                            <span class="tag">Soldering</span>
+                            <span class="tag">3D Printing</span>
+                            <span class="tag">Arduino</span>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-card-icon" aria-hidden="true">&#128313;</div>
+                        <h3 class="project-card-title">FPGA Embedded Systems (ECE3073)</h3>
+                        <p class="project-card-desc">Built a complete embedded system on Intel DE10-Lite: live video display pipeline from ESP-CAM, double-tap gesture detection via ADXL345 accelerometer over SPI, and Nios II soft processor integration with custom peripherals. Solved SPI transaction formatting, register address masking bugs, and interrupt handling conflicts.</p>
+                        <div class="research-tags">
+                            <span class="tag">Verilog</span>
+                            <span class="tag">Quartus Prime</span>
+                            <span class="tag">Nios II</span>
+                            <span class="tag">SPI</span>
+                            <span class="tag">C / HAL</span>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-card-icon" aria-hidden="true">&#127942;</div>
+                        <h3 class="project-card-title">Medical Service App — 1st Place Hackathon</h3>
+                        <p class="project-card-desc">Won 1st place at Konkuk University hackathon for a medical service application. Designed and developed a health-tech solution in a competitive team environment.</p>
+                        <div class="research-tags">
+                            <span class="tag">Hackathon Winner</span>
+                            <span class="tag">Medical App</span>
+                            <span class="tag">Konkuk University</span>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-card-icon" aria-hidden="true">&#129516;</div>
+                        <h3 class="project-card-title">Pre-PhD Research Internships</h3>
+                        <p class="project-card-desc">Bioinformatics research at Konkuk University. ECG data analysis at SDU (Denmark). Tumor contouring using segmentation models on CT images at Yonsei University Medical Physics Lab.</p>
+                        <div class="research-tags">
+                            <span class="tag">Bioinformatics</span>
+                            <span class="tag">ECG Analysis</span>
+                            <span class="tag">Medical Imaging</span>
+                            <span class="tag">Segmentation</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== NEWS ========== -->
+        <section id="news" aria-labelledby="news-title">
+            <div class="section-inner fade-in">
+                <p class="section-label">News &amp; Updates</p>
+                <h2 class="section-title" id="news-title">Latest</h2>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026</div>
+                        <div class="timeline-title">Deputy of TA — Computer Systems</div>
+                        <div class="timeline-desc">Promoted to Deputy Teaching Associate for Computer Systems course at Monash University, S1 2026.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2025</div>
+                        <div class="timeline-title">Paper Submitted to IJHCS</div>
+                        <div class="timeline-desc">Submitted "Spatial Alignment of Audio–Haptic Directional Feedback Shapes Non-Visual Hand Guidance" to the International Journal of Human-Computer Studies.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2025</div>
+                        <div class="timeline-title">Conference Posters — SfN &amp; IEEE EMBS</div>
+                        <div class="timeline-desc">Presented research on multimodal feedback spatial alignment at the Society for Neuroscience and IEEE EMBS conferences.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2024</div>
+                        <div class="timeline-title">Conference Presentations — APEC &amp; EPSM</div>
+                        <div class="timeline-desc">Presented poster at APEC 2024 and delivered oral presentation at EPSM 2024 on wrist-worn vibrotactile feedback for directional guidance.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Open to Opportunities</div>
+                        <div class="timeline-title">Seeking Industry R&amp;D Roles</div>
+                        <div class="timeline-desc">Interested in roles at the intersection of VR, wearable devices, BCI, and creative technology — at companies like Meta, Disney, and other innovation-driven organizations. Also open to postdoctoral research.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== CONTACT ========== -->
+        <section id="contact" aria-labelledby="contact-title">
+            <div class="section-inner fade-in">
+                <p class="section-label">Get in Touch</p>
+                <h2 class="section-title" id="contact-title">Contact</h2>
+                <p class="section-desc">I'm open to conversations about research collaborations, industry R&amp;D opportunities in VR/wearables/BCI, or postdoctoral positions.</p>
+
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <div class="contact-card-icon" aria-hidden="true">&#9993;</div>
+                        <div class="contact-card-label">Email</div>
+                        <div class="contact-card-value"><a href="mailto:chaerim.kim@monash.edu">chaerim.kim@monash.edu</a></div>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-card-icon" aria-hidden="true">&#128101;</div>
+                        <div class="contact-card-label">LinkedIn</div>
+                        <div class="contact-card-value"><a href="https://www.linkedin.com/in/chaerim-kim-a13065286/" target="_blank" rel="noopener noreferrer">Chaerim Kim</a></div>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-card-icon" aria-hidden="true">&#128187;</div>
+                        <div class="contact-card-label">GitHub</div>
+                        <div class="contact-card-value"><a href="https://github.com/Lucy-kim030" target="_blank" rel="noopener noreferrer">Lucy-kim030</a></div>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-card-icon" aria-hidden="true">&#128218;</div>
+                        <div class="contact-card-label">ORCID</div>
+                        <div class="contact-card-value"><a href="https://orcid.org/0009-0006-7860-8392" target="_blank" rel="noopener noreferrer">0009-0006-7860-8392</a></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ========== FOOTER ========== -->
+    <footer>
+        <div class="footer-links">
+            <a href="#about">About</a>
+            <a href="#research">Research</a>
+            <a href="#skills">Skills</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <p>&copy; 2026 Chaerim Kim. Built with care and attention to accessibility.</p>
+    </footer>
+
+    <!-- ========== SCRIPTS ========== -->
+    <script>
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const html = document.documentElement;
+
+        function setTheme(theme) {
+            html.setAttribute('data-theme', theme);
+            themeIcon.textContent = theme === 'dark' ? '\u2600' : '\u263E';
+            try { localStorage.setItem('theme', theme); } catch(e) {}
+        }
+
+        // Check saved preference or system preference
+        try {
+            const saved = localStorage.getItem('theme');
+            if (saved) setTheme(saved);
+            else if (window.matchMedia('(prefers-color-scheme: dark)').matches) setTheme('dark');
+        } catch(e) {}
+
+        themeToggle.addEventListener('click', () => {
+            const current = html.getAttribute('data-theme');
+            setTheme(current === 'dark' ? 'light' : 'dark');
+        });
+
+        // Mobile menu
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            const isOpen = navLinks.classList.toggle('open');
+            mobileMenuBtn.setAttribute('aria-expanded', isOpen);
+            mobileMenuBtn.textContent = isOpen ? '\u2715' : '\u2630';
+        });
+
+        // Close mobile menu on link click
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                mobileMenuBtn.textContent = '\u2630';
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Smooth active nav highlighting
+        const sections = document.querySelectorAll('section[id]');
+        const navItems = document.querySelectorAll('.nav-links a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const top = section.offsetTop - 100;
+                if (scrollY >= top) current = section.getAttribute('id');
+            });
+            navItems.forEach(link => {
+                link.style.color = link.getAttribute('href') === '#' + current ? 'var(--accent)' : '';
+            });
+        }, { passive: true });
+    </script>
+</body>
+</html>
