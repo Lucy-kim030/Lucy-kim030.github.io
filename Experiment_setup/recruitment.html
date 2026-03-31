@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>The Academic Curator | VR Navigation Study</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface": "#f8fafb",
+              "on-error-container": "#65000b",
+              "primary-fixed": "#92dbfe",
+              "surface-tint": "#036785",
+              "error-dim": "#70030f",
+              "on-secondary-container": "#445863",
+              "secondary-dim": "#425661",
+              "primary-fixed-dim": "#84cdef",
+              "surface-container-high": "#e4e9eb",
+              "on-error": "#fff7f6",
+              "on-primary-fixed": "#00394b",
+              "on-primary-container": "#004e65",
+              "surface-container-lowest": "#ffffff",
+              "secondary": "#4e626d",
+              "on-tertiary-fixed-variant": "#476a6f",
+              "tertiary-dim": "#36595d",
+              "on-secondary-fixed": "#324550",
+              "surface-container-low": "#f1f4f5",
+              "on-primary-fixed-variant": "#005872",
+              "on-surface": "#2d3435",
+              "tertiary-fixed-dim": "#c4e9ef",
+              "on-secondary": "#f3faff",
+              "primary-container": "#92dbfe",
+              "tertiary": "#42656a",
+              "on-tertiary-container": "#3d6065",
+              "outline": "#757c7e",
+              "surface-bright": "#f8fafb",
+              "primary-dim": "#005a75",
+              "on-background": "#2d3435",
+              "primary": "#036785",
+              "outline-variant": "#acb3b5",
+              "tertiary-container": "#d2f8fd",
+              "on-secondary-fixed-variant": "#4e626d",
+              "secondary-fixed-dim": "#c8ddea",
+              "tertiary-fixed": "#d2f8fd",
+              "surface-variant": "#dde4e6",
+              "on-primary": "#f3faff",
+              "on-surface-variant": "#596062",
+              "background": "#f8fafb",
+              "surface-container-highest": "#dde4e6",
+              "inverse-surface": "#0b0f10",
+              "on-tertiary-fixed": "#2a4d52",
+              "secondary-fixed": "#d6ebf9",
+              "on-tertiary": "#eafcff",
+              "surface-container": "#eaeef0",
+              "inverse-on-surface": "#9a9d9e",
+              "error": "#ac3434",
+              "secondary-container": "#d6ebf9",
+              "error-container": "#f56965",
+              "surface-dim": "#d4dbde",
+              "inverse-primary": "#92dbfe"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .signature-gradient {
+        background: linear-gradient(135deg, #036785 0%, #005a75 100%);
+    }
+    .glass-panel {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(12px);
+    }
+    /* Scroll-triggered fade-in */
+    .fade-section {
+        opacity: 0;
+        transform: translateY(32px);
+        transition: opacity 0.8s cubic-bezier(.4,0,.2,1), transform 0.8s cubic-bezier(.4,0,.2,1);
+    }
+    .fade-section.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+
+<!-- Top Navigation Shell -->
+<nav class="fixed top-0 w-full z-50 glass-panel shadow-sm shadow-cyan-900/5 transition-all duration-300">
+    <div class="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto">
+        <span class="font-headline font-bold text-xl text-cyan-900 tracking-tight">The Academic Curator</span>
+        <div class="hidden md:flex items-center gap-8 font-label text-sm font-semibold">
+            <a class="text-slate-600 hover:text-cyan-800 transition-all duration-300" href="#about">About</a>
+            <a class="text-slate-600 hover:text-cyan-800 transition-all duration-300" href="#process">Process</a>
+            <a class="text-slate-600 hover:text-cyan-800 transition-all duration-300" href="#booking">Booking</a>
+            <a class="text-slate-600 hover:text-cyan-800 transition-all duration-300" href="#eligibility">Eligibility</a>
+            <a class="text-slate-600 hover:text-cyan-800 transition-all duration-300" href="#faq">FAQ</a>
+            <a class="signature-gradient text-on-primary px-6 py-2.5 rounded-full font-bold hover:opacity-90 transition-all transform hover:scale-105 active:scale-95 shadow-md shadow-primary/10" href="#booking">Participate Now</a>
+        </div>
+        <!-- Mobile menu button -->
+        <button class="md:hidden p-2 rounded-lg hover:bg-surface-container-low" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+            <span class="material-symbols-outlined">menu</span>
+        </button>
+    </div>
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden px-8 pb-4 font-label text-sm font-semibold space-y-3">
+        <a class="block text-slate-600 hover:text-cyan-800 py-2" href="#about">About</a>
+        <a class="block text-slate-600 hover:text-cyan-800 py-2" href="#process">Process</a>
+        <a class="block text-slate-600 hover:text-cyan-800 py-2" href="#booking">Booking</a>
+        <a class="block text-slate-600 hover:text-cyan-800 py-2" href="#eligibility">Eligibility</a>
+        <a class="block text-slate-600 hover:text-cyan-800 py-2" href="#faq">FAQ</a>
+        <a class="block signature-gradient text-on-primary px-6 py-2.5 rounded-full font-bold text-center" href="#booking">Participate Now</a>
+    </div>
+</nav>
+
+<main class="pt-20">
+
+<!-- Hero Section -->
+<section class="relative min-h-[870px] flex items-center overflow-hidden px-8 py-20">
+    <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center relative z-10">
+        <div class="space-y-8">
+            <span class="inline-block px-4 py-1.5 bg-tertiary-container text-on-tertiary-container text-xs font-bold tracking-widest rounded-md uppercase">Monash University Research</span>
+            <h1 class="font-headline text-5xl md:text-7xl font-extrabold text-on-surface leading-tight tracking-tight">
+                Participate in a <span class="text-primary italic">VR Navigation</span> Study
+            </h1>
+            <p class="text-xl text-on-surface-variant max-w-lg leading-relaxed">
+                Help us shape the future of assistive vision technology through immersive virtual reality experiences.
+            </p>
+            <div class="flex flex-wrap gap-4 pt-4">
+                <a class="signature-gradient text-on-primary px-10 py-4 rounded-full font-bold text-lg hover:opacity-95 transition-all transform hover:scale-105 flex items-center gap-2" href="#booking">
+                    Book Session 1
+                    <span class="material-symbols-outlined">arrow_forward</span>
+                </a>
+                <div class="flex items-center gap-3 px-6 py-4 bg-surface-container-low rounded-full">
+                    <span class="material-symbols-outlined text-primary">payments</span>
+                    <span class="font-bold text-on-surface">$100 AUD Total Reimbursement</span>
+                </div>
+            </div>
+        </div>
+        <div class="relative lg:h-[600px] flex items-center justify-center">
+            <div class="absolute inset-0 bg-primary-container/20 rounded-full blur-3xl -z-10 animate-pulse"></div>
+            <img alt="A person wearing a high-tech VR headset in a clean modern laboratory setting with blue ambient lighting and scientific displays" class="w-full h-auto object-cover rounded-3xl shadow-2xl transform rotate-2 hover:rotate-0 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFnn5f5ZgcEHj9ImCCMczF-Ke7igMsrufF44RUa495A9tvVUbJ9vGClQ4Xw-ijGWqlnvL0LLO0ljUSADdBp_YO9MVvzSzT4lKmTqZvgYOc3LVOSGeSq2R02hAh5cGe0mQfQBLxcGricKnSO_tBHRUSwVqgyScaS1YOnQUKXNht1K9nUFMhb5KSsSMe_UyTZhfnyYP1LRurpgdgLYPNWZiPWNS6Fu4_ghJ9o0Cp5J7MjxgMbI-eFvNsxUqllZ9TH2CqpBLgq-i6-7E">
+            <div class="absolute -bottom-6 -left-6 glass-panel p-6 rounded-2xl shadow-xl max-w-xs hidden md:block border border-white/20">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-secondary-container rounded-full flex items-center justify-center text-primary">
+                        <span class="material-symbols-outlined">hand_gesture</span>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold">Haptic Feedback</p>
+                        <p class="text-xs text-on-surface-variant">Experience wearable wristbands</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="py-24 bg-surface-container-low fade-section" id="about">
+    <div class="max-w-7xl mx-auto px-8">
+        <div class="grid md:grid-cols-2 gap-16 items-center">
+            <div class="relative group">
+                <img alt="A research participant in a university lab wearing a VR headset and a haptic wristband, interacting with a virtual supermarket environment." class="rounded-3xl shadow-lg group-hover:scale-[1.02] transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8oPSuylJBQa5fClQ4l0MR_xhsUoahsd5fEh0dcPAF5_wk7NcU9k-9gA9SZ4G2kBCguYyNYYd0pjVsoL2pq9wXpM6AKtPYrABVaFXfXa38Jk0GgFbrP7ImmFzjxVINMqKtCPwhrxufG4rLvqByi5ix2WeP3lkbbJmZ1xidx9uzWdP8-VdFxqghXdzuJUCywlZNVdnV8IYy3z8ff6B2sMS8fEL0u2o_A_Cs4l7zsWBpmJ5cUxbFjinJBCPkfi5xSi3zYqwE6wIzaRs">
+                <div class="absolute inset-0 bg-primary/10 rounded-3xl mix-blend-multiply"></div>
+            </div>
+            <div class="space-y-6">
+                <h2 class="font-headline text-3xl md:text-4xl font-bold">What is this study about?</h2>
+                <div class="w-16 h-1 bg-primary rounded-full"></div>
+                <p class="text-lg text-on-surface-variant leading-relaxed">
+                    Our team is developing wearable haptic wristbands that help individuals with low vision navigate complex environments. In this VR experiment, you will experience <strong>simulated prosthetic vision</strong>&mdash;a digital representation of what a bionic eye user might see.
+                </p>
+                <p class="text-lg text-on-surface-variant leading-relaxed">
+                    By participating, you provide vital data on how humans process tactile information alongside limited visual cues. This research directly informs the design of next-generation assistive devices.
+                </p>
+                <div class="flex gap-4 pt-4">
+                    <div class="flex-1 p-4 bg-surface-container-lowest rounded-xl border-l-4 border-primary">
+                        <p class="text-xs font-bold text-primary uppercase mb-1">Impact</p>
+                        <p class="text-sm font-medium">Real-world aid for visual impairments</p>
+                    </div>
+                    <div class="flex-1 p-4 bg-surface-container-lowest rounded-xl border-l-4 border-tertiary">
+                        <p class="text-xs font-bold text-tertiary uppercase mb-1">Safety</p>
+                        <p class="text-sm font-medium">Non-invasive, controlled environment</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sessions Section -->
+<section class="py-24 bg-surface fade-section" id="process">
+    <div class="max-w-7xl mx-auto px-8">
+        <div class="text-center mb-16 space-y-4">
+            <h2 class="font-headline text-4xl font-bold">Your Journey in Two Sessions</h2>
+            <p class="text-on-surface-variant text-lg">Participation involves two distinct sessions on separate days.</p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Session 1 -->
+            <div class="bg-surface-container-lowest p-10 rounded-[2rem] hover:bg-secondary-container transition-colors duration-500 flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-start mb-8">
+                        <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary">
+                            <span class="material-symbols-outlined text-4xl">visibility</span>
+                        </div>
+                        <span class="text-4xl font-black text-outline-variant opacity-20">01</span>
+                    </div>
+                    <h3 class="font-headline text-2xl font-bold mb-4">Familiarity &amp; Navigation</h3>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-primary mt-1">check_circle</span>
+                            <span>Introduction to the VR environment and haptic wristbands.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-primary mt-1">check_circle</span>
+                            <span>Learning to interpret vibrations for spatial guidance.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-primary mt-1">schedule</span>
+                            <span>Approx. 1.5 Hours</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-surface-container-low p-4 rounded-xl text-sm italic">
+                    Tasks are non-strenuous and involve walking in a clear, safe room.
+                </div>
+            </div>
+            <!-- Session 2 -->
+            <div class="bg-surface-container-lowest p-10 rounded-[2rem] hover:bg-secondary-container transition-colors duration-500 flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-start mb-8">
+                        <div class="w-16 h-16 bg-tertiary-container rounded-2xl flex items-center justify-center text-tertiary">
+                            <span class="material-symbols-outlined text-4xl">directions_run</span>
+                        </div>
+                        <span class="text-4xl font-black text-outline-variant opacity-20">02</span>
+                    </div>
+                    <h3 class="font-headline text-2xl font-bold mb-4">Dynamic Obstacle Avoidance</h3>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-tertiary mt-1">check_circle</span>
+                            <span>Navigating moving targets and complex virtual hallways.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-tertiary mt-1">check_circle</span>
+                            <span>Testing the speed and accuracy of your navigation.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-tertiary mt-1">schedule</span>
+                            <span>Approx. 1.5 Hours</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-surface-container-low p-4 rounded-xl text-sm italic">
+                    Completed on a different day to ensure freshness and comfort.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Booking & Process -->
+<section class="py-24 bg-surface-container-low fade-section" id="booking">
+    <div class="max-w-7xl mx-auto px-8">
+        <div class="grid lg:grid-cols-12 gap-16">
+            <div class="lg:col-span-5 space-y-12">
+                <div>
+                    <h2 class="font-headline text-4xl font-bold mb-6">How to Book</h2>
+                    <p class="text-on-surface-variant text-lg">Follow these five simple steps to complete your participation.</p>
+                </div>
+                <div class="space-y-6">
+                    <div class="flex gap-6 group">
+                        <div class="flex-shrink-0 w-10 h-10 rounded-full signature-gradient text-white flex items-center justify-center font-bold">1</div>
+                        <div>
+                            <p class="font-bold">Choose Session 1</p>
+                            <p class="text-sm text-on-surface-variant">Select an available time slot from the Session 1 calendar widget.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6 group">
+                        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-outline-variant text-white flex items-center justify-center font-bold">2</div>
+                        <div>
+                            <p class="font-bold">Attend Monash Clayton</p>
+                            <p class="text-sm text-on-surface-variant">Arrive at the lab for your first interactive VR experience.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6 group">
+                        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-outline-variant text-white flex items-center justify-center font-bold">3</div>
+                        <div>
+                            <p class="font-bold">Choose Session 2</p>
+                            <p class="text-sm text-on-surface-variant">Schedule your follow-up visit (at least 24h after session 1).</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6 group">
+                        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-outline-variant text-white flex items-center justify-center font-bold">4</div>
+                        <div>
+                            <p class="font-bold">Attend Second Visit</p>
+                            <p class="text-sm text-on-surface-variant">Complete the dynamic obstacle course session.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6 group">
+                        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-tertiary-dim text-white flex items-center justify-center font-bold">5</div>
+                        <div>
+                            <p class="font-bold">Receive Reimbursement</p>
+                            <p class="text-sm text-on-surface-variant">Get paid $100 AUD for your time and contribution.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:col-span-7 space-y-8">
+                <!-- Session 1 Booking -->
+                <div class="bg-surface-container-lowest p-8 rounded-3xl shadow-sm space-y-6">
+                    <h4 class="font-headline text-xl font-bold border-b border-outline-variant/15 pb-4">Book Session 1</h4>
+                    <div class="aspect-video bg-surface-container-low rounded-xl flex items-center justify-center border-2 border-dashed border-outline-variant/30">
+                        <div class="w-full h-full flex flex-col items-center justify-center p-8 text-center">
+                            <div class="mb-4 p-4 bg-white rounded-full shadow-sm">
+                                <span class="material-symbols-outlined text-5xl text-primary">calendar_month</span>
+                            </div>
+                            <p class="text-on-surface font-bold text-lg mb-2">Select an available time slot below</p>
+                            <p class="text-on-surface-variant text-sm mb-6 max-w-xs">Click on a date to see available 1.5-hour sessions for your first visit.</p>
+                            <a class="inline-flex items-center gap-2 px-6 py-3 signature-gradient text-white rounded-lg font-bold hover:opacity-90 transition-all transform hover:scale-105 shadow-lg" href="https://calendar.app.google/TMQgmip31Gf6dtfAA" target="_blank" rel="noopener noreferrer">
+                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M19.5 3h-3V1.5h-1.5V3h-6V1.5H7.5V3h-3C3.675 3 3 3.675 3 4.5v15c0 .825.675 1.5 1.5 1.5h15c.825 0 1.5-.675 1.5-1.5v-15c0-.825-.675-1.5-1.5-1.5zm0 16.5h-15V9h15v10.5zm0-12h-15V4.5h15V7.5z"/></svg>
+                                Book on Google Calendar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Session 2 Booking -->
+                <div class="bg-surface-container-lowest p-8 rounded-3xl shadow-sm space-y-6">
+                    <h4 class="font-headline text-xl font-bold border-b border-outline-variant/15 pb-4">Book Session 2</h4>
+                    <div class="aspect-video bg-surface-container-low rounded-xl flex items-center justify-center border-2 border-dashed border-outline-variant/30">
+                        <div class="w-full h-full flex flex-col items-center justify-center p-8 text-center">
+                            <div class="mb-4 p-4 bg-white rounded-full shadow-sm">
+                                <span class="material-symbols-outlined text-5xl text-tertiary">event_available</span>
+                            </div>
+                            <p class="text-on-surface font-bold text-lg mb-2">Select an available time slot below</p>
+                            <p class="text-on-surface-variant text-sm mb-6 max-w-xs">Choose your follow-up visit. Remember this must be at least 24 hours after Session 1.</p>
+                            <a class="inline-flex items-center gap-2 px-6 py-3 signature-gradient text-white rounded-lg font-bold hover:opacity-90 transition-all transform hover:scale-105 shadow-lg" href="https://calendar.app.google/TMQgmip31Gf6dtfAA" target="_blank" rel="noopener noreferrer">
+                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M19.5 3h-3V1.5h-1.5V3h-6V1.5H7.5V3h-3C3.675 3 3 3.675 3 4.5v15c0 .825.675 1.5 1.5 1.5h15c.825 0 1.5-.675 1.5-1.5v-15c0-.825-.675-1.5-1.5-1.5zm0 16.5h-15V9h15v10.5zm0-12h-15V4.5h15V7.5z"/></svg>
+                                Book on Google Calendar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Eligibility Checklist -->
+<section class="py-24 bg-surface fade-section" id="eligibility">
+    <div class="max-w-7xl mx-auto px-8">
+        <div class="bg-inverse-surface text-on-tertiary p-12 rounded-[2.5rem] relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full -mr-20 -mt-20 blur-3xl"></div>
+            <h2 class="font-headline text-3xl font-bold mb-12 text-center">Eligibility Checklist</h2>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="flex flex-col items-center text-center space-y-4">
+                    <div class="w-14 h-14 bg-surface/10 rounded-full flex items-center justify-center">
+                        <span class="material-symbols-outlined text-3xl text-primary-fixed">person_check</span>
+                    </div>
+                    <p class="font-bold">Aged 18+</p>
+                    <p class="text-sm opacity-70">Participants must be legal adults.</p>
+                </div>
+                <div class="flex flex-col items-center text-center space-y-4">
+                    <div class="w-14 h-14 bg-surface/10 rounded-full flex items-center justify-center">
+                        <span class="material-symbols-outlined text-3xl text-primary-fixed">visibility</span>
+                    </div>
+                    <p class="font-bold">Normal Vision</p>
+                    <p class="text-sm opacity-70">Normal or corrected to normal vision.</p>
+                </div>
+                <div class="flex flex-col items-center text-center space-y-4">
+                    <div class="w-14 h-14 bg-surface/10 rounded-full flex items-center justify-center">
+                        <span class="material-symbols-outlined text-3xl text-primary-fixed">location_on</span>
+                    </div>
+                    <p class="font-bold">On-Campus</p>
+                    <p class="text-sm opacity-70">Able to attend 2 sessions at Monash Clayton.</p>
+                </div>
+                <div class="flex flex-col items-center text-center space-y-4">
+                    <div class="w-14 h-14 bg-surface/10 rounded-full flex items-center justify-center">
+                        <span class="material-symbols-outlined text-3xl text-primary-fixed">health_and_safety</span>
+                    </div>
+                    <p class="font-bold">No History</p>
+                    <p class="text-sm opacity-70">No history of motion sickness or epilepsy.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="py-24 bg-surface-container-low fade-section" id="faq">
+    <div class="max-w-4xl mx-auto px-8">
+        <h2 class="font-headline text-4xl font-bold mb-12 text-center">Frequently Asked Questions</h2>
+        <div class="space-y-4">
+            <div class="group bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm">
+                <details class="p-6">
+                    <summary class="flex justify-between items-center font-bold cursor-pointer list-none group-open:text-primary">
+                        Do I need VR experience?
+                        <span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+                    </summary>
+                    <div class="pt-4 text-on-surface-variant leading-relaxed">
+                        No prior experience is required! We provide a full orientation and practice time during Session 1 to ensure you are comfortable with the equipment and the virtual environment.
+                    </div>
+                </details>
+            </div>
+            <div class="group bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm">
+                <details class="p-6">
+                    <summary class="flex justify-between items-center font-bold cursor-pointer list-none group-open:text-primary">
+                        Will I feel sick?
+                        <span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+                    </summary>
+                    <div class="pt-4 text-on-surface-variant leading-relaxed">
+                        While motion sickness is a small possibility in VR, we utilize high-refresh-rate headsets and design our simulations to minimize discomfort. We specifically screen for a history of motion sickness to protect our participants.
+                    </div>
+                </details>
+            </div>
+            <div class="group bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm">
+                <details class="p-6">
+                    <summary class="flex justify-between items-center font-bold cursor-pointer list-none group-open:text-primary">
+                        What should I bring?
+                        <span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+                    </summary>
+                    <div class="pt-4 text-on-surface-variant leading-relaxed">
+                        Just yourself! If you wear glasses or contact lenses, please bring/wear them. We recommend wearing comfortable flat shoes as you will be walking short distances.
+                    </div>
+                </details>
+            </div>
+            <div class="group bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm">
+                <details class="p-6">
+                    <summary class="flex justify-between items-center font-bold cursor-pointer list-none group-open:text-primary">
+                        Can I do both sessions on the same day?
+                        <span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+                    </summary>
+                    <div class="pt-4 text-on-surface-variant leading-relaxed">
+                        No, we require sessions to be held on different days (at least 24 hours apart). This is to ensure data accuracy and to prevent participant fatigue or "VR hangover."
+                    </div>
+                </details>
+            </div>
+            <div class="group bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm">
+                <details class="p-6">
+                    <summary class="flex justify-between items-center font-bold cursor-pointer list-none group-open:text-primary">
+                        How do I get paid?
+                        <span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+                    </summary>
+                    <div class="pt-4 text-on-surface-variant leading-relaxed">
+                        Reimbursement ($50 per session) is typically processed via bank transfer or gift card upon completion of each session. You will receive the details during your first visit.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Location & Contact -->
+<section class="py-24 bg-surface fade-section">
+    <div class="max-w-7xl mx-auto px-8">
+        <div class="grid md:grid-cols-2 gap-12">
+            <div class="space-y-8">
+                <h2 class="font-headline text-3xl font-bold">Location &amp; Contact</h2>
+                <div class="space-y-6">
+                    <div class="flex gap-4">
+                        <span class="material-symbols-outlined text-primary">location_on</span>
+                        <div>
+                            <p class="font-bold">Monash University Clayton Campus</p>
+                            <p class="text-on-surface-variant">Room236/14 Alliance Ln</p>
+                            <p class="text-on-surface-variant">Clayton VIC 3168, Australia</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <span class="material-symbols-outlined text-primary">mail</span>
+                        <div>
+                            <p class="font-bold">Lead Researcher</p>
+                            <a href="mailto:chaerim.kim@monash.edu" class="text-primary hover:text-cyan-800 transition-colors">chaerim.kim@monash.edu</a>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <span class="material-symbols-outlined text-primary">school</span>
+                        <div>
+                            <p class="font-bold">Ethics Approval</p>
+                            <p class="text-on-surface-variant">Monash University Human Research Ethics Committee</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-3xl overflow-hidden shadow-lg min-h-[320px]">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3148.8!2d145.1345!3d-37.9105!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad66acbb5e2e80b%3A0xb6c3a8e1e6e05e01!2sMonash%20University%20Clayton%20Campus!5e0!3m2!1sen!2sau!4v1700000000000!5m2!1sen!2sau" width="100%" height="100%" style="border:0; min-height:320px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<!-- Footer -->
+<footer class="bg-inverse-surface text-on-tertiary py-12 px-8">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+        <div>
+            <p class="font-headline font-bold text-lg">The Academic Curator</p>
+            <p class="text-sm opacity-70">Monash University &middot; Department of Human-Centred Computing</p>
+        </div>
+        <div class="text-sm opacity-70 text-center md:text-right">
+            <p>This study has been approved by the Monash University Human Research Ethics Committee.</p>
+            <p class="mt-1">&copy; 2026 Chaerim Kim. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Scroll-triggered fade-in animation -->
+<script>
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-section').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
